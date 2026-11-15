@@ -18,14 +18,15 @@
         default_layer {
             display-name = "Base Layer";
 // -----------------------------------------------------------------------------------------
-// |  Q   |  W   |  E   |  R   |  T   |   |  Y   |  U   |  I   |  O   |  P   |
-// |LS(A) |LT5(S)|LT1(D)|LT3(F)|  G   |   |  H   |LT4(J)|LT2(K)|LT6(L)|LS(;) |
-// |LS(Z) |LC(X) |LA(C) |  V   |  B   |   |  N   |  M   |LA(,) |LC(.) |  /   |
+// Gallium (columnar staggered): https://github.com/GalileoBlues/Gallium
+// |  B   |  L   |  D   |  C   |  V   |   |  J   |  Y   |  O   |  U   |  ,   |
+// |LS(N) |LT5(R)|LT1(T)|LT3(S)|  G   |   |  P   |LT4(H)|LT2(A)|LT6(E)|LS(I) |
+// |LS(X) |LC(Q) |LA(M) |  W   |  Z   |   |  K   |  F   |LA(') |LC(;) |  .   |
 //                      |  0   | BSPC |   | LT7(SPC) |  1  |
             bindings = <
-&kp Q       &kp W       &kp E      &kp R   &kp T   &kp Y &kp U   &kp I          &kp O         &kp P
-&mt LSHFT A &lt 5 S     &lt 1 D    &lt 3 F &kp G   &kp H &lt 4 J &lt 2 K        &lt 6 L       &mt LSHFT SEMI
-&mt LSHFT Z &mt LCTRL X &mt LALT C &kp V   &kp B   &kp N &kp M   &mt LALT COMMA &mt LCTRL DOT &kp FSLH
+&kp B       &kp L       &kp D      &kp C   &kp V   &kp J &kp Y   &kp O        &kp U          &kp COMMA
+&mt LSHFT N &lt 5 R     &lt 1 T    &lt 3 S &kp G   &kp P &lt 4 H &lt 2 A      &lt 6 E        &mt LSHFT I
+&mt LSHFT X &mt LCTRL Q &mt LALT M &kp W   &kp Z   &kp K &kp F   &mt LALT SQT &mt LCTRL SEMI &kp DOT
                                  &kp N0 &kp BSPC   &lt 7 SPACE &kp N1
 
 &kp RGUI &none &none &none &none                                      &none &none &none &none &kp RGUI
