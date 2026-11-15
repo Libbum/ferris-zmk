@@ -18,6 +18,6 @@
 ---
 include:
   - board: halcyon_wireless//zmk
-    shield: halcyon_ferris_left
+    shield: halcyon_ferris_left mod_encoder_left
   - board: halcyon_wireless//zmk
-    shield: halcyon_ferris_right
+    shield: halcyon_ferris_right mod_encoder_right
