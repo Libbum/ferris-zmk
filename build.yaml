@@ -19,7 +19,7 @@
 include:
   - board: halcyon_dongle//zmk
     shield: halcyon_ferris_dongle
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    cmake-args: -DCONFIG_ZMK_STUDIO=y -DCONFIG_ZMK_POINTING=y
     snippet: studio-rpc-usb-uart
   - board: halcyon_wireless//zmk
     shield: halcyon_ferris_left mod_battery_coincell mod_encoder_left
