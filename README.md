@@ -1,281 +1,237 @@
-# Official Splitkb.com Halcyon ZMK config
+# Halcyon Ferris — Gallium, tap layers
 
-This is the Splitkb Halcyon ZMK config repository. It allows for an external set of ZMK keymaps with or without Halcyon modules to be defined and compiled. If you want to add support to your existing keyboard, please look at the [porting guide](PORTING.md).
+Personal ZMK config for a splitkb **Halcyon Ferris** (34 keys) with a **Halcyon dongle**,
+two **encoder modules** and **coincell batteries**. Built from the
+[splitkb Halcyon config template](https://github.com/splitkb/zmk-halcyon-config) — see its
+README for build-target and module documentation ([porting guide](PORTING.md)).
 
-##### Table of Contents  
-[Supported keyboards](#supported-keyboards)  
-[Initial Setup](#initial-setup--prerequisites)  
-[Configuring Build targets](#how-to-configure-your-build-targets)  
-[Build target examples](#examples)  
-[Local build](#local-builds)  
-[Default config options](#config-options)  
-[Customizing module behavior](#customizing-module-behavior) 
+Linux only. Intended to eventually replace a Planck.
 
-## Supported Keyboards
+> **Status:** design complete, not yet flashed. The keymap has not been compiled since the
+> layer rewrite — see [TODO](#todo).
 
-Supported boards:
+## Hardware / build
 
-| Board name | Board variable |
-| :--- | :--- |
-| Halcyon Wireless controller | `halcyon_wireless//zmk` |
-| Halcyon Dongle | `halcyon_dongle//zmk` |
-| Halcyon Wired controller* | `halcyon_wired//zmk` |
+| Target | Board | Shields | Notes |
+| --- | --- | --- | --- |
+| Dongle (central) | `halcyon_dongle//zmk` | `halcyon_ferris_dongle` | ZMK Studio over USB, pointing enabled |
+| Left half | `halcyon_wireless//zmk` | `halcyon_ferris_left mod_battery_coincell mod_encoder_left` | peripheral (`CONFIG_ZMK_SPLIT_ROLE_CENTRAL=n`) |
+| Right half | `halcyon_wireless//zmk` | `halcyon_ferris_right mod_battery_coincell mod_encoder_right` | peripheral |
 
-*While the wired controller is supported, full testing has not been done. Some configurations may not work as expected.
+The dongle is the split central: it owns the keymap, combos and the USB connection, which
+saves the halves' coincells. `CONFIG_ZMK_POINTING=y` (mouse keys, scroll) is only set on the
+dongle because only the central sends HID reports.
 
+Key positions: `0–9` top row, `10–19` home, `20–29` bottom, thumbs `30 31 | 32 33`
+(left outer, left inner, right inner, right outer), `34–43` Halcyon module row
+(`34` = left knob press, `43` = right knob press).
 
-Supported keyboard shields:
+## Host setup
 
-| Keyboard name | Shield variable |
-| :--- | :--- |
-| Halcyon Kyria (rev4) | `halcyon_kyria` |
-| Halcyon Elora (rev2) | `halcyon_elora` |
-| Halcyon Corne (rev2) | `halcyon_corne` |
-| Halcyon Ferris (rev1) | `halcyon_ferris` |
-| Halcyon Lily58 (rev2) | `halcyon_lily58` |
-| Aurora Sweep (rev1)* | `splitkb_aurora_sweep` |
-| Aurora Lily58 (rev1)* | `splitkb_aurora_lily58` |
-| Aurora Corne (rev1)* | `splitkb_aurora_corne` |
-| Aurora Helix (rev1)* | `splitkb_aurora_helix` |
-| Aurora Sofle v2 (rev1)* | `splitkb_aurora_sofle` |
-| Kyria (rev3)* | `kyria_rev3` |
+- XKB layout **`us(altgr-intl)`** (KDE: `kxkbrc` + Fcitx 5 profile `keyboard-us-altgr-intl`).
+  The keymap sends `AltGr+key` for ä å ö € — Right Alt is reserved for AltGr, so the right-hand
+  Alt combo sends *Left* Alt.
+- Fcitx 5 with pinyin as a second input method.
 
-*The files for the Aurora and Kyria rev3 shields can be found in the [Aurora branch](https://github.com/splitkb/zmk-halcyon-config/tree/aurora). If you want to customize your keyboard behavior and keep the Halcyon module functionality, make sure to use that branch. You can delete any files for the keyboards you are not using.
+## Layers
 
+All layer switching is by **tap** (`&to`): a layer stays until you leave it. No holds, except
+the bootloader keys.
 
-Supported converters:
+![Keymap](keymap-drawer/keymap.svg)
 
-| Converter name | Shield variable |
-| :--- | :--- |
-| Halcyon to Promicro adapter | `halcyon_to_promicro` |
-
-
-Supported battery boards:
-| Battery board name | Shield variable |
-| :--- | :--- |
-| LiPo Battery board | `mod_battery_lipo` |
-| Coincell Battery board | `mod_battery_coincell` |
-
-
-Supported module shields:
-
-| Module name | Shield variable |
-| :--- | :--- |
-| [Halcyon TFT LCD Display Module](https://splitkb.com/products/halcyon-tft-lcd-display-module) | `mod_display_tft` |
-| [Halcyon Rotary Encoder Module Revision 2](https://splitkb.com/products/halcyon-rotary-encoder-module) | `mod_encoder_left` and `mod_encoder_right` |
-| [Halcyon Cirque Touchpad Module](https://splitkb.com/products/halcyon-cirque-touchpad-module) | `mod_cirque_central_hw`, `mod_cirque_central`, `mod_cirque_hw_left` and `mod_cirque_hw_right` |
-| Halcyon Epaper Display Module | `mod_display_epaper_mountain`, `mod_display_epaper_forest` and `mod_display_epaper_cityscape` |
-| Halcyon MIP Display Module (TBA) | `mod_display_mip` |
-
-
-## Initial Setup & Prerequisites
-
-Create a fork of this repository using the `Use this template` button and select `Create a new repository`. 
-
-Follow the steps from the [ZMK documentation](https://zmk.dev/docs/user-setup). When you arrive at [Config Repo Setup](https://zmk.dev/docs/user-setup#config-repo-setup) step, follow the steps where you already have a ZMK config repo on github where you point to the newly cloned fork.
-
-> The aurora branch will have already setup the config. You can clear the `build.yaml` file and follow the instructions and examples below to set up your specific build.
-
-# How to Configure Your Build Targets
-
-By default the ZMK CLI will create build targets for the left and right half. The `build.yaml` file will need to be updated to support the various modules as shown above.
-
-The following section explains how to correctly compose the `shield` values.
-
-## 1. Dongle Builds
-
-Dongles use a fixed composition:
-
-```yaml
-shield: <keyboard>_dongle mod_cirque_central
-```
-
-* `<keyboard>_dongle` is your keyboard’s dongle shield
-* `mod_cirque_central` is required when one of the halfs includes a cirque trackpad
-
-No other modules are added to dongles.
-
-## 2. Keyboard Shields
-
-A keyboard build generally looks like this:
-
-```yaml
-shield: <converter_shield> <keyboard>_<side> <battery> <module>
-cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-```
-
-* `<converter_shield>` = optional, only needed when using the Halcyon to Promicro adapter
-* `<keyboard>` = one of the supported keyboards
-* `<side>` = `left` or `right`
-* `<battery>` = your selected battery module
-* `<module>` = your selected Halcyon module, which will be explained in the next section
-* The `cmake-args` is only needed for the left side or on dongle builds 
-
-At the bottom there are some examples.
-
-## 3. Adding Modules
-
-### Encoder Modules
-
-Match the module to the correct side:
-
-* Left encoder:
-
-  ```yaml
-  shield: <keyboard>_left <battery> mod_encoder_left
-  ```
-
-* Right encoder:
-
-  ```yaml
-  shield: <keyboard>_right <battery> mod_encoder_right
-  ```
-
-
----
-
-
-### Pointing Modules
-
-#### Dongle builds
-
-Match the module to the correct side:
-
-* Left-side pointing:
-
-  ```yaml
-  shield: <keyboard>_left <battery> mod_cirque_hw_left
-  ```
-
-* Right-side pointing:
-
-  ```yaml
-  shield: <keyboard>_right <battery> mod_cirque_hw_right
-  ```
-
-#### Non-dongle builds
-
-* Left central pointing device:
-
-  ```yaml
-  shield: <keyboard>_left <battery> mod_cirque_central_hw
-  ```
-
-* Right-side pointing:
-
-  ```yaml
-  shield: <keyboard>_right <battery> mod_cirque_hw_right
-  ```
-
-> When NOT using a dongle but you are using a Cirque trackpad on the right half, the left side will need `mod_cirque_central` appended to the build.
-
----
-
-### Display Modules
-
-For the display module you can choose between three images: `forest`, `mountain` and `cityscape`.
-
-* Left half with image:
-
-  ```yaml
-  shield: <keyboard>_left <battery> mod_display_epaper_<image>
-  ```
-
-* Right half with image:
-
-  ```yaml
-  shield: <keyboard>_right <battery> mod_display_epaper_<image>
-  ```
-
-
-## 4. Studio Builds
-
-If building a Studio build, append:
-
-```yaml
-cmake-args: -DCONFIG_ZMK_STUDIO=y
-snippet: studio-rpc-usb-uart
-```
-
-To the central half. This will be either the dongle or the left side when **NOT** using a dongle.
-
-## Examples:
-
-Halcyon Kyria with a dongle with ZMK Studio enabled, a epaper display with the forest image and coincell battery on the left half, and a rotary encoder and coincell battery on the right half.
+<details>
+<summary>Text version</summary>
 
 ```
----
-include:
-  - board: halcyon_dongle//zmk
-    shield: halcyon_kyria_dongle
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
-    snippet: studio-rpc-usb-uart
-  - board: halcyon_wireless//zmk
-    shield: halcyon_kyria_left mod_battery_coincell mod_display_epaper_forest
-    cmake-args: -DCONFIG_ZMK_SPLIT_ROLE_CENTRAL=n
-  - board: halcyon_wireless//zmk
-    shield: halcyon_kyria_right mod_battery_coincell mod_encoder_right
+BASE  (Gallium, column-staggered)
+┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
+│  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U ⌫ ,  │  U+, = Backspace
+│ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │     │  upper pairs: characters
+│  N  │  R  │  T  │  S  │  G  │   │  P  │  H  │  A  │  E  │  I  │
+│     │ gui │ alt │ ctl │     │   │     │ ctl │ alt │ gui │     │  lower pairs: sticky mods
+│  X  │  Q  │  M  │  W  │  Z  │   │  K  │  F  │  '  │  ;  │  .  │
+└─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
+                  │ ⇧1× │ Spc │   │ Ent │ →SYM│   ⇧1× = sticky shift, double-tap = caps word
+                  └──┬──┴──┬──┘   └──┬──┴──┬──┘
+                     └─NAV─┘         └─NUM─┘      thumb pairs → layer (all layers)
+                           └── Esc ──┘            Spc+Ent (not on NUM)
+
+SYM  (Pascal Getreuer's symbol layer, ? and _ in place of , and .)
+┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
+│  `  │  <  │  >  │  -  │  |  │   │  ^  │  {  │  }  │  $  │  \  │
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│  !  │  *  │  /  │  =  │  &  │   │  #  │  (  │  )  │  ;  │  "  │
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│  ~  │  +  │  [  │  ]  │  %  │   │  @  │  :  │  ?  │  _  │  '  │
+└─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
+                  │→BASE│Spc→B│   │Ent→B│ →NAV│   Spc→B / Ent→B = key, then back to BASE
+
+NAV
+┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
+│Undo │ Cut │Copy │Paste│Redo │   │ ⇧←  │ ⇧↓  │ ⇧↑  │ ⇧→  │Boot*│  select
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│ Esc │ Tab │ ⇧Tab│ Del │ ⌃F  │   │  ←  │  ↓  │  ↑  │  →  │Mouse│  move
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│     │PrtSc│PrvTb│NxtTb│ ⌃A  │   │Home │PgDn │PgUp │ End │     │  jump
+└─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
+                  │→BASE│ Spc │   │ Ent │ →NUM│
+
+NUM
+┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
+│Studi│ F7  │ F8  │ F9  │ F10 │   │  +  │  7  │  8  │  9  │  ,  │
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│  €  │ F4  │ F5  │ F6  │ F11 │   │  -  │  4  │  5  │  6  │  :  │
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│Boot*│ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
+└─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
+                  │→BASE│Spc→B│   │  0  │ →SYM│
+
+MOUSE  (NAV's twin — reached from NAV's Mouse key)
+┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
+│     │Back │ Fwd │     │     │   │  ⇠  │  ⇣  │  ⇡  │  ⇢  │     │  scroll
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│     │RClk │MClk │LClk │     │   │  ←  │  ↓  │  ↑  │  →  │ Nav │  pointer
+├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
+│     │     │     │     │     │   │     │     │     │     │     │
+└─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
+                  │→BASE│ Spc │   │ Ent │ →NUM│
+
+Boot* = hold 1 s (a tap does nothing). Resets the half it is pressed on.
 ```
 
-Aurora corne without dongle, no module and LiPo battery on the left half, and a a cirque touchpad and LiPo battery on the right half.
+</details>
 
+### Getting around
+
+| From BASE | Action |
+| --- | --- |
+| SYM | tap right outer thumb |
+| NAV | left thumbs together |
+| NUM | right thumbs together |
+| MOUSE | NAV → Mouse key |
+| back to BASE | left outer thumb, or left knob press (any layer) |
+
+On SYM / NAV / NUM the right outer thumb cycles SYM → NAV → NUM → SYM.
+
+### Combos
+
+All combos use a 40 ms window. "Prior-idle" combos are disabled for 150 ms after any other
+key press, so fast typing can't trigger them.
+
+| Keys | Output | Layers | Prior-idle |
+| --- | --- | --- | --- |
+| Spc + Ent (31+32) | Esc | all but NUM | – |
+| L-thumbs (30+31) | → NAV | all | – |
+| R-thumbs (32+33) | → NUM | all | – |
+| U + , (8+9) | Backspace | all | ✓ |
+| B + N (0+10) | Tab | BASE | – |
+| R+Q / T+M / S+W | sticky GUI / Alt / Ctrl (left) | all | – |
+| H+F / A+' / E+; | sticky Ctrl / Alt / GUI (right) | all | – |
+| L+R / D+T / C+S | `_` `/` `-` | BASE | ✓ |
+| V+G / J+P | `(` `)` | BASE | ✓ |
+| Y+H / O+A / U+E | ä å ö | BASE | ✓ |
+
+Sticky mods apply to the next key only (released after 1 s if unused).
+
+### Knobs
+
+"Etch-a-sketch": left knob is horizontal, right knob is vertical. Clockwise = right / down.
+
+| Layer | Left knob | Right knob |
+| --- | --- | --- |
+| BASE, SYM, NUM | word ← → (Ctrl+arrow) | scroll ↑ ↓ |
+| NAV | character ← → | line ↑ ↓ |
+| MOUSE | pointer ← → (fixed step) | pointer ↑ ↓ (fixed step) |
+| press (all layers) | → BASE | middle click |
+
+## Design decisions
+
+Each choice was argued on its own merits for this board — not carried over from the Planck.
+
+- **Gallium (colstag)** base layout. Vowels and H on the right hand.
+- **Space on the left inner thumb.** With Gallium's vowels on the right, a left-thumb space
+  pairs with consonant-heavy left-hand words and produces more alternating-hand rolls.
+  Enter mirrors it on the right.
+- **Tap layers instead of holds** (Ben Vallack-style), as an experiment. Holds are fine
+  elsewhere; this tests whether a tap-only flow is comfortable.
+- **Vertical combos, one finger, two keys.** A finger can press the key below it at the same
+  time, but a normal roll can never overlap two keys on the same finger, so these combos
+  can't misfire while typing. Upper pairs (top+home) produce characters, lower pairs
+  (home+bottom) produce sticky modifiers.
+- **Symbols ranked from real data.** Off-base symbol frequency was measured from my own
+  commits, shell history and written prompts (equal weight each, excluding `, . ' ;`):
+  `-` 22% · `/` 15% · `:` 8% · `"` 8% · `_` 7% · `(` `)` 6% each · `` ` `` 4% · `=` 3%.
+  The top ones got BASE combos; `:` and `"` are sticky shift + `;` / `'`.
+- **SYM = Getreuer's layer**: brackets on the right, operators clustered on the left.
+- **NAV**: arrows under the right hand with select (⇧arrow) above and jumps below; GUI editing
+  shortcuts on the left, ordered by how often they're used, rarest keys in the corners.
+- **NUM, also from data.** Digit frequency: `0` 27% · `1` 16% · `2` 14% · rest 4–8%, so `0`
+  takes the strongest key (thumb). The characters most often next to a number
+  (space 36% · `.` 27% · `-` 13% · `,` 7% · `:` 4% · `/` 3%) fill the outer columns, with
+  `,` and `.` in the same spots as on BASE. Space on NUM returns to BASE because
+  it's the most common thing typed after a number.
+- **F-keys** share NUM in the same numpad shape — rarely used, so they take the spare half.
+- **Esc combo is off on NUM**: there the inner thumbs are Space and `0`, and `0 ` is a
+  common roll.
+- **Bootloader on both halves, 1 s hold.** `&bootloader` resets the half the key is on, so
+  each half needs its own; the hold stops a "thought I was on BASE" `.` from rebooting.
+- **Layer chords from BASE** (same-hand thumb pairs) make every layer one action away;
+  neither pair (Shift+Space, Enter+→SYM) occurs in normal typing.
+- **Tab combo has no prior-idle**: it's usually pressed right after typing (shell completion).
+- **No volume** on the knobs — not wanted.
+
+### Caveats
+
+- NAV's Undo/Cut/Copy/Paste/⌃A/⌃F are GUI shortcuts. In Neovim, Ctrl+Z suspends, Ctrl+V is
+  block-visual, Ctrl+A increments and Ctrl+F pages down — use vim's own keys there.
+- Vim motions are on the NAV arrows for now; editors will be remapped for Gallium later.
+
+## TODO
+
+### Before flashing
+- [ ] Compile the keymap (CI or a local Docker build) — nothing since the layer rewrite has been built.
+
+### When the board arrives
+- [ ] **Encoder press row offset.** `zmk-halcyon-module`'s `halcyon_ferris.dtsi` sets the
+      encoder-press `row-offset = <3>`; other Halcyon boards use their matrix row count (4/5).
+      If confirmed, knob presses fire as the inner thumbs (Space/Enter) instead of keys 34/43.
+      Fix: per-half overlays setting `row-offset = <4>` (not a shared overlay — the dongle has
+      no `kscan_composite`). Report upstream.
+- [ ] Tune knob scroll step, pointer step and direction.
+- [ ] Tune combo timing (40 ms window, 150 ms prior-idle) — especially J+P for `)`.
+- [ ] Check sticky-key timeout (1 s) feels right.
+- [ ] Verify: Ctrl+click with sticky Ctrl, held Boot resets the correct half, Studio unlock.
+
+### Later
+- [ ] Remap Neovim, Zed (`keymap.json`) and zsh vi-mode for Gallium.
+- [ ] Knobs for tiling window manager navigation (focus / workspace).
+- [ ] Fcitx 5 pinyin ideas.
+- [ ] Decide whether the MOUSE layer earns its place.
+- [ ] Spare keys: NAV bottom-left and bottom-right pinky corners, most of MOUSE.
+
+## Drawing the layout
+
+[keymap-drawer](https://github.com/caksoylar/keymap-drawer) parses the ZMK keymap directly.
+Web version: <https://keymap-drawer.streamlit.app> (paste the keymap). Locally:
+
+Everything lives in [`keymap-drawer/`](keymap-drawer):
+
+- `config.yaml` — readable labels for custom behaviors/shortcuts, symbol glyphs, and
+  thumb-chord placement. It replaces keymap-drawer's built-in keycode map, so new
+  symbols need adding there.
+- `halcyon_ferris-layouts.dtsi` — physical layout, copied from
+  [zmk-halcyon-module](https://github.com/splitkb/zmk-halcyon-module/blob/main/boards/shields/halcyon_ferris/halcyon_ferris-layouts.dtsi).
+- `draw.sh` — parses the keymap, drops the Halcyon module row (keys 34–43) and draws with
+  the plain 34-key `splitkb_halcyon_ferris` layout.
+- `keymap.yaml`, `keymap.svg` — generated.
+
+Regenerate after editing the keymap:
+
+```sh
+keymap-drawer/draw.sh
 ```
----
-include:
-  - board: halcyon_wireless//zmk
-    shield: halcyon_to_promicro splitkb_aurora_corne_left mod_battery_lipo mod_cirque_central
-  - board: halcyon_wireless//zmk
-    shield: halcyon_to_promicro splitkb_aurora_corne_right mod_battery_lipo mod_cirque_hw_right
-```
 
+The knobs (rotation and presses) aren't drawn — see the [Knobs](#knobs) table.
 
-# Local builds
-
-Building the Halcyon boards and shields is of course also possible locally. For this you will just need to follow the [ZMK guide](https://zmk.dev/docs/development/local-toolchain/setup).
-
-The only thing of note is that you will need to add the following repository as a module.
-- [splitkb/zmk-halcyon-module](https://github.com/splitkb/zmk-halcyon-module)
-
-
-# Config options
-
-ZMK allows for a lot of different configuration options. On our Halcyon keyboards we enable a couple of these options to improve the user experience. It is good to know which options are enabled if you ever plan to customize the firmware.
-
-| Config | Description | Board/shield |
-| :--- | :--- | :--- |
-| CONFIG_ZMK_SLEEP | Enable sleep to increase battery life | `halcyon_wireless` |
-| CONFIG_BT_CTLR_TX_PWR_PLUS_8 | Increase TX on dongle | `halcyon_dongle` |
-| CONFIG_ZMK_IDLE_TIMEOUT=900000 | Increase idle timeout to decrease the number of updates the epaper display does | `mod_display_epaper_*` |
-| CONFIG_ZMK_BATTERY_REPORT_INTERVAL=600 | Battery life is weeks to months so updating less makes sense | `mod_battery_*` |
-| CONFIG_ZMK_RGB_UNDERGLOW_AUTO_OFF_USB | Makes sure that the EXT_POWER turns off when you unplug the keyboard with coin cell battery to increase battery life | `mod_battery_coincell` |
-| CONFIG_ZMK_RGB_UNDERGLOW=y | Enable RGB | `keyboard shield` |
-| CONFIG_ZMK_RGB_UNDERGLOW_ON_START=n | Disable RGB on start | `keyboard shield` |
-| CONFIG_ZMK_RGB_UNDERGLOW_BRT_MAX=20 | Set a limit to the brightness, so your battery won't drain quickly | `keyboard shield` |
-
-
-# Customizing module behavior
-
-Within the [ZMK Halcyon module repository](https://github.com/splitkb/zmk-halcyon-module) we define all keyboard shields, controller boards, halcyon module shields and drivers. 
-
-With Zephyr, what ZMK is based on, it's quite easy to override any functions in the keymap file.
-
-As an example, overriding the number of times the LED will blink and at which percentage, can be done like the following in a `.keymap` file.
-
-```c
-&battery_empty_led {
-    battery_threshold_percentage = <40>;
-    num_blinks = <10>;
-};
-```
-
-## Display
-
-Please look at the [ZMK documentation](https://zmk.dev/docs/config/displays) if you want to change the behavior of the display. You can also look at the [README from the Halcyon Epaper shield](https://github.com/splitkb/zmk-halcyon-module/blob/main/boards/shields/mod_display_epaper/README.md) to see how you can add a custom image.
-
-## Encoder
-
-Keycodes can be changed in the `sensor-bindings` of your keymap where the order is as following; left halcyon encoder, right halcyon encoder, left soldered encoder and right soldered encoder.
-
-## Cirque
-
-Behavior can be changed by adding input processors. You can look at the [ZMK documentation](https://zmk.dev/docs/keymaps/input-processors) for the available options.
+It also ships a GitHub Action that redraws the SVG on every push.

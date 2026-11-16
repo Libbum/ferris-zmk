@@ -1,0 +1,230 @@
+layout: {zmk_keyboard: halcyon_ferris}
+layers:
+  Gallium:
+  - B
+  - L
+  - D
+  - C
+  - V
+  - J
+  - Y
+  - O
+  - U
+  - ','
+  - N
+  - R
+  - T
+  - S
+  - G
+  - P
+  - H
+  - A
+  - E
+  - I
+  - X
+  - Q
+  - M
+  - W
+  - Z
+  - K
+  - F
+  - ''''
+  - ;
+  - .
+  - {t: ⇧ 1×, h: 2× caps}
+  - Spc
+  - Ent
+  - → Sym
+  Sym:
+  - '`'
+  - <
+  - '>'
+  - '-'
+  - '|'
+  - ^
+  - '{'
+  - '}'
+  - $
+  - \
+  - '!'
+  - '*'
+  - /
+  - '='
+  - '&'
+  - '#'
+  - (
+  - )
+  - ;
+  - '"'
+  - '~'
+  - +
+  - '['
+  - ']'
+  - '%'
+  - '@'
+  - ':'
+  - '?'
+  - _
+  - ''''
+  - → Base
+  - {t: Space, h: → Base}
+  - {t: Enter, h: → Base}
+  - → Nav
+  Nav:
+  - Undo
+  - Cut
+  - Copy
+  - Paste
+  - Redo
+  - ⇧ ←
+  - ⇧ ↓
+  - ⇧ ↑
+  - ⇧ →
+  - {t: Boot, h: hold 1 s}
+  - Esc
+  - Tab
+  - ⇧ Tab
+  - Del
+  - Find
+  - ←
+  - ↓
+  - ↑
+  - →
+  - → Mouse
+  - ''
+  - PrtSc
+  - Prev tab
+  - Next tab
+  - Sel all
+  - Home
+  - PgDn
+  - PgUp
+  - End
+  - ''
+  - → Base
+  - Spc
+  - Ent
+  - → Num
+  Num:
+  - Studio unlock
+  - F7
+  - F8
+  - F9
+  - F10
+  - +
+  - '7'
+  - '8'
+  - '9'
+  - ','
+  - €
+  - F4
+  - F5
+  - F6
+  - F11
+  - '-'
+  - '4'
+  - '5'
+  - '6'
+  - ':'
+  - {t: Boot, h: hold 1 s}
+  - F1
+  - F2
+  - F3
+  - F12
+  - /
+  - '1'
+  - '2'
+  - '3'
+  - .
+  - → Base
+  - {t: Space, h: → Base}
+  - '0'
+  - → Sym
+  Mouse:
+  - ''
+  - Back
+  - Fwd
+  - ''
+  - ''
+  - Scroll ←
+  - Scroll ↓
+  - Scroll ↑
+  - Scroll →
+  - ''
+  - ''
+  - R click
+  - M click
+  - L click
+  - ''
+  - 🖰 ←
+  - 🖰 ↓
+  - 🖰 ↑
+  - 🖰 →
+  - → Nav
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - → Base
+  - Spc
+  - Ent
+  - → Num
+combos:
+- p: [31, 32]
+  k: Esc
+  l: [Gallium, Sym, Nav, Mouse]
+- p: [30, 31]
+  k: → Nav
+  a: bottom
+  o: 0.6
+- p: [32, 33]
+  k: → Num
+  a: bottom
+  o: 0.6
+- p: [0, 10]
+  k: Tab
+  l: [Gallium]
+- p: [8, 9]
+  k: ⌫
+- p: [11, 21]
+  k: GUI
+- p: [12, 22]
+  k: Alt
+- p: [13, 23]
+  k: Ctrl
+- p: [16, 26]
+  k: Ctrl
+- p: [17, 27]
+  k: Alt
+- p: [18, 28]
+  k: GUI
+- p: [6, 16]
+  k: ä
+  l: [Gallium]
+- p: [7, 17]
+  k: å
+  l: [Gallium]
+- p: [8, 18]
+  k: ö
+  l: [Gallium]
+- p: [3, 13]
+  k: '-'
+  l: [Gallium]
+- p: [2, 12]
+  k: /
+  l: [Gallium]
+- p: [1, 11]
+  k: _
+  l: [Gallium]
+- p: [4, 14]
+  k: (
+  l: [Gallium]
+- p: [5, 15]
+  k: )
+  l: [Gallium]
