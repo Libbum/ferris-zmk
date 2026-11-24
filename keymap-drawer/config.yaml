@@ -12,7 +12,6 @@ parse_config:
     "&to NUM": "→ Num"
     "&to MOUSE": "→ Mouse"
     "&boot_hold 0 0": { t: "Boot", h: "hold 1 s" }
-    "&studio_unlock": "Studio unlock"
     "&kp RA(Q)": "ä"
     "&kp RA(W)": "å"
     "&kp RA(P)": "ö"

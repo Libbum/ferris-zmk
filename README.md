@@ -14,7 +14,7 @@ Linux only. Intended to eventually replace a Planck.
 
 | Target | Board | Shields | Notes |
 | --- | --- | --- | --- |
-| Dongle (central) | `halcyon_dongle//zmk` | `halcyon_ferris_dongle` | ZMK Studio over USB, pointing enabled |
+| Dongle (central) | `halcyon_dongle//zmk` | `halcyon_ferris_dongle` | pointing enabled |
 | Left half | `halcyon_wireless//zmk` | `halcyon_ferris_left mod_battery_coincell mod_encoder_left` | peripheral (`CONFIG_ZMK_SPLIT_ROLE_CENTRAL=n`) |
 | Right half | `halcyon_wireless//zmk` | `halcyon_ferris_right mod_battery_coincell mod_encoder_right` | peripheral |
 
@@ -79,7 +79,7 @@ NAV
 
 NUM
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
-│Studi│ F7  │ F8  │ F9  │ F10 │   │  +  │  7  │  8  │  9  │  ,  │
+│     │ F7  │ F8  │ F9  │ F10 │   │  +  │  7  │  8  │  9  │  ,  │
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │  €  │ F4  │ F5  │ F6  │ F11 │   │  -  │  4  │  5  │  6  │  :  │
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
@@ -205,14 +205,14 @@ Each choice was argued on its own merits for this board — not carried over fro
 - [ ] Tune knob scroll step, pointer step and direction.
 - [ ] Tune combo timing (40 ms window, 150 ms prior-idle) — especially J+P for `)`.
 - [ ] Check sticky-key timeout (1 s) feels right.
-- [ ] Verify: Ctrl+click with sticky Ctrl, held Boot resets the correct half, Studio unlock.
+- [ ] Verify: Ctrl+click with sticky Ctrl, held Boot resets the correct half.
 
 ### Later
 - [ ] Remap Neovim, Zed (`keymap.json`) and zsh vi-mode for Gallium.
 - [ ] Knobs for tiling window manager navigation (focus / workspace).
 - [ ] Fcitx 5 pinyin ideas.
 - [ ] Decide whether the MOUSE layer earns its place.
-- [ ] Spare keys: NAV bottom-left and bottom-right pinky corners, most of MOUSE.
+- [ ] Spare keys: NAV bottom-left and bottom-right pinky corners, NUM top-left, most of MOUSE.
 
 ## Drawing the layout
 
