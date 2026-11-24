@@ -190,7 +190,7 @@ combos:
 - p: [0, 10]
   k: Tab
   l: [Gallium]
-- p: [8, 9]
+- p: [9, 19]
   k: ⌫
 - p: [11, 21]
   k: GUI

@@ -45,8 +45,8 @@ All layer switching is by **tap** (`&to`): a layer stays until you leave it. No 
 ```
 BASE  (Gallium, column-staggered)
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
-│  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U ⌫ ,  │  U+, = Backspace
-│ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │     │  upper pairs: characters
+│  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U  │  ,  │
+│ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │  ⌫  │  upper pairs: characters
 │  N  │  R  │  T  │  S  │  G  │   │  P  │  H  │  A  │  E  │  I  │
 │     │ gui │ alt │ ctl │     │   │     │ ctl │ alt │ gui │     │  lower pairs: sticky mods
 │  X  │  Q  │  M  │  W  │  Z  │   │  K  │  F  │  '  │  ;  │  .  │
@@ -122,8 +122,8 @@ key press, so fast typing can't trigger them.
 | Spc + Ent (31+32) | Esc | all but NUM | – |
 | L-thumbs (30+31) | → NAV | all | – |
 | R-thumbs (32+33) | → NUM | all | – |
-| U + , (8+9) | Backspace | all | ✓ |
 | B + N (0+10) | Tab | BASE | – |
+| , + I (9+19) | Backspace | all | – |
 | R+Q / T+M / S+W | sticky GUI / Alt / Ctrl (left) | all | – |
 | H+F / A+' / E+; | sticky Ctrl / Alt / GUI (right) | all | – |
 | L+R / D+T / C+S | `_` `/` `-` | BASE | ✓ |

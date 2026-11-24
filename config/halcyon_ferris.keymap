@@ -147,12 +147,13 @@
             layers = <BASE>;
         };
 
-        // Backspace: top-right pair (U + ,)
+        // Backspace: right pinky upper pair (, + I), mirror of Tab. All layers.
+        // One finger, so the ring/pinky stagger doesn't matter and it can't misfire in
+        // a roll. No prior-idle: Backspace usually follows typing straight away.
         combo_bspc {
-            key-positions = <8 9>;
+            key-positions = <9 19>;
             bindings = <&kp BSPC>;
             timeout-ms = <40>;
-            require-prior-idle-ms = <150>;
         };
 
         // Sticky mods: home-row key + the key directly below (same finger).
@@ -263,8 +264,8 @@
         base {
             display-name = "Gallium";
 // ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
-// │  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U ⌫ ,  │
-// │ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │     │
+// │  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U  │  ,  │
+// │ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │  ⌫  │
 // │  N  │  R  │  T  │  S  │  G  │   │  P  │  H  │  A  │  E  │  I  │
 // │     │ gui │ alt │ ctl │     │   │     │ ctl │ alt │ gui │     │
 // │  X  │  Q  │  M  │  W  │  Z  │   │  K  │  F  │  '  │  ;  │  .  │
