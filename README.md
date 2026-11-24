@@ -53,9 +53,9 @@ BASE  (Gallium, column-staggered)
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
                   │ ⇧1× │ Spc │   │ Ent │  ⌫  │   ⇧1× = sticky shift, double-tap = caps word
                   └──┬──┴──┬──┘   └──┬──┴──┬──┘
-                     └─NAV─┘         └─NUM─┘      thumb pairs → layer (all layers)
+                     └─NUM─┘         └─SYM─┘      thumb pairs → layer (all layers)
                            └── Esc ──┘            Spc+Ent (not on NUM)
-                  └──────── SYM ────────┘        both outer thumbs (all layers)
+                  └──────── NAV ────────┘        both outer thumbs (all layers)
 
 SYM  (Pascal Getreuer's symbol layer, ? and _ in place of , and .)
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
@@ -105,9 +105,9 @@ MOUSE  (NAV's twin — reached from NAV's Mouse key)
 
 | To | Action (from any layer) |
 | --- | --- |
-| SYM | both outer thumbs together |
-| NAV | left thumbs together |
-| NUM | right thumbs together |
+| NUM | left thumbs together |
+| SYM | right thumbs together |
+| NAV | both outer thumbs together |
 | MOUSE | NAV → Mouse key |
 | back to BASE | left outer thumb, or left knob press |
 
@@ -121,9 +121,9 @@ key press, so fast typing can't trigger them.
 | Keys | Output | Layers | Prior-idle |
 | --- | --- | --- | --- |
 | Spc + Ent (31+32) | Esc | all but NUM | – |
-| L-thumbs (30+31) | → NAV | all | – |
-| R-thumbs (32+33) | → NUM | all | – |
-| outer thumbs (30+33) | → SYM | all | – |
+| L-thumbs (30+31) | → NUM | all | – |
+| R-thumbs (32+33) | → SYM | all | – |
+| outer thumbs (30+33) | → NAV | all | – |
 | B + N (0+10) | Tab | BASE | – |
 | R+Q / T+M / S+W | sticky GUI / Alt / Ctrl (left) | all | – |
 | H+F / A+' / E+; | sticky Ctrl / Alt / GUI (right) | all | – |

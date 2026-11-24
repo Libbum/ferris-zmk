@@ -180,15 +180,17 @@ combos:
   k: Esc
   l: [Gallium, Sym, Nav, Mouse]
 - p: [30, 31]
-  k: → Nav
-  a: bottom
-  o: 0.6
-- p: [32, 33]
   k: → Num
   a: bottom
   o: 0.6
-- p: [30, 33]
+- p: [32, 33]
   k: → Sym
+  a: bottom
+  o: 0.6
+- p: [30, 33]
+  k: → Nav
+  a: bottom
+  o: 1.5
 - p: [0, 10]
   k: Tab
   l: [Gallium]

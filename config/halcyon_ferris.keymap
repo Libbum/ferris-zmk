@@ -124,22 +124,22 @@
             layers = <BASE SYM NAV MOUSE>;
         };
 
-        // Layer chords, all layers. Same-hand thumb pairs: left (Shift + Space) = NAV,
-        // right (Enter + Backspace) = NUM — one thumb on two keys, so no rolls.
-        // Both outer thumbs (Shift + Backspace) = SYM.
-        combo_to_nav {
-            key-positions = <30 31>;
-            bindings = <&to NAV>;
-            timeout-ms = <40>;
-        };
+        // Layer chords, all layers. Same-hand thumb pairs: left (Shift + Space) = NUM,
+        // right (Enter + Backspace) = SYM — one thumb on two keys, so no rolls.
+        // Both outer thumbs (Shift + Backspace) = NAV.
         combo_to_num {
-            key-positions = <32 33>;
+            key-positions = <30 31>;
             bindings = <&to NUM>;
             timeout-ms = <40>;
         };
         combo_to_sym {
-            key-positions = <30 33>;
+            key-positions = <32 33>;
             bindings = <&to SYM>;
+            timeout-ms = <40>;
+        };
+        combo_to_nav {
+            key-positions = <30 33>;
+            bindings = <&to NAV>;
             timeout-ms = <40>;
         };
 
@@ -269,9 +269,9 @@
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
 //                   │ ⇧1× │ Spc │   │ Ent │  ⌫  │
 //                   └─────┴─────┘   └─────┴─────┘
-//                      └─NAV─┘         └─NUM─┘    thumb pairs → layer (all layers)
+//                      └─NUM─┘         └─SYM─┘    thumb pairs → layer (all layers)
 //                           └── Esc ──┘          Spc+Ent (not on NUM)
-//                   └──────── SYM ────────┘      both outer thumbs (all layers)
+//                   └──────── NAV ────────┘      both outer thumbs (all layers)
             bindings = <
 &kp B  &kp L  &kp D  &kp C  &kp V      &kp J  &kp Y  &kp O    &kp U    &kp COMMA
 &kp N  &kp R  &kp T  &kp S  &kp G      &kp P  &kp H  &kp A    &kp E    &kp I

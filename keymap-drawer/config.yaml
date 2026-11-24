@@ -50,8 +50,11 @@ parse_config:
     "&sk RCTRL": "Ctrl"
   # Combo placement: thumb chords drawn under the thumbs so they don't cover labels.
   zmk_combos:
-    combo_to_nav: { align: bottom, offset: 0.6 }
     combo_to_num: { align: bottom, offset: 0.6 }
+    combo_to_sym: { align: bottom, offset: 0.6 }
+    # Outer thumbs aren't adjacent: drop the label below the pair chords so its
+    # lines arc underneath instead of cutting across the inner thumbs.
+    combo_to_nav: { align: bottom, offset: 1.5 }
   # Plain keycodes → label (this replaces keymap-drawer's built-in map, so list symbols too)
   zmk_keycode_map:
     SPACE: "Spc"
