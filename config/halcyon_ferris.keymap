@@ -71,12 +71,15 @@
         // ── Encoders: "etch-a-sketch" — left knob horizontal, right knob vertical.
         // Clockwise = right / down. Each detent is a short tap of the action.
 
-        // Scroll wheel. 30 ms tap so at least one scroll report is sent per detent.
+        // Scroll wheel: one notch per detent. &msc reports every 16 ms (first report
+        // 16 ms after press) and drops fractions on release. The stock SCRL_* speed
+        // (10/s) gives 0.16 notch per report, so a short tap scrolls nothing.
+        // At 80/s one report = 1.28 → 1 notch; a 24 ms tap fits exactly one report.
         enc_scroll: encoder_scroll {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-            tap-ms = <30>;
+            bindings = <&msc MOVE_Y(-80)>, <&msc MOVE_Y(80)>;
+            tap-ms = <24>;
         };
 
         // Pointer mover with no acceleration, so every detent moves the same distance
@@ -100,6 +103,17 @@
             #sensor-binding-cells = <0>;
             bindings = <&enc_mmv MOVE_DOWN>, <&enc_mmv MOVE_UP>;
             tap-ms = <30>;
+        };
+    };
+
+    // Fix for the splitkb Halcyon Ferris shield: it puts the Halcyon module keys
+    // (knob presses) at row-offset 3, which collides with the thumb row, so the left
+    // knob press sent Space (pos 31) and the right one Enter (pos 32). The module row
+    // is row 4 in halcyon_transform. Overridden by path so the dongle, which has no
+    // kscan_composite, just gets an inert node without a compatible.
+    kscan_composite {
+        halcyon {
+            row-offset = <4>;
         };
     };
 
