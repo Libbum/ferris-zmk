@@ -7,8 +7,8 @@ README for build-target and module documentation ([porting guide](PORTING.md)).
 
 Linux only. Intended to eventually replace a Planck.
 
-> **Status:** design complete, not yet flashed. The keymap has not been compiled since the
-> layer rewrite — see [TODO](#todo).
+> **Status:** flashed and working on all three devices (dongle + both halves); in daily
+> tuning — see [TODO](#todo).
 
 ## Hardware / build
 
@@ -189,15 +189,19 @@ Each choice was argued on its own merits for this board — not carried over fro
 
 ## TODO
 
-### Before flashing
-- [ ] Compile the keymap (CI or a local Docker build) — nothing since the layer rewrite has been built.
+### Bring-up
+- [x] Compile and flash dongle and both halves.
+- [x] **Encoder press row offset.** Confirmed: `zmk-halcyon-module`'s `halcyon_ferris.dtsi`
+      sets `row-offset = <3>`, so the left knob press sent Space and the right one Enter.
+      ZMK only reads `.conf` and `.keymap` from `config/` (no overlays), so the keymap
+      overrides `/kscan_composite/halcyon` by path with `row-offset = <4>`; on the dongle,
+      which has no `kscan_composite`, that's an inert node. Reported upstream in
+      [splitkb/zmk-halcyon-module#1](https://github.com/splitkb/zmk-halcyon-module/pull/1) —
+      the override can go once that's merged.
+- [x] Knob scroll sent nothing: stock `&msc` speed (10/s) over a 30 ms tap is under one
+      notch. Now 80/s with a 24 ms tap = one notch per detent.
 
-### When the board arrives
-- [ ] **Encoder press row offset.** `zmk-halcyon-module`'s `halcyon_ferris.dtsi` sets the
-      encoder-press `row-offset = <3>`; other Halcyon boards use their matrix row count (4/5).
-      If confirmed, knob presses fire as the inner thumbs (Space/Enter) instead of keys 34/43.
-      Fix: per-half overlays setting `row-offset = <4>` (not a shared overlay — the dongle has
-      no `kscan_composite`). Report upstream.
+### Tuning
 - [ ] Tune knob scroll step, pointer step and direction.
 - [ ] Tune combo timing (40 ms window, 150 ms prior-idle) — especially J+P for `)`.
 - [ ] Check sticky-key timeout (1 s) feels right.
