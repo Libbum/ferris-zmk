@@ -11,7 +11,6 @@ parse_config:
     "&to NAV": "→ Nav"
     "&to NUM": "→ Num"
     "&to MOUSE": "→ Mouse"
-    "&boot_hold 0 0": { t: "Boot", h: "hold 1 s" }
     "&kp RA(Q)": "ä"
     "&kp RA(W)": "å"
     "&kp RA(P)": "ö"

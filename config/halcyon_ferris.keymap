@@ -44,16 +44,6 @@
             bindings = <&sk LSHFT>, <&caps_word>;
         };
 
-        // Bootloader only after a 1 s hold; a tap does nothing.
-        // Resets the half the key is on (hold-tap keeps the key's source).
-        boot_hold: bootloader_on_hold {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <1000>;
-            bindings = <&bootloader>, <&none>;
-        };
-
         // Space that also returns to base (symbol runs usually end in a space).
         spc_home: space_then_base {
             compatible = "zmk,behavior-macro";
@@ -321,9 +311,9 @@
 
         nav {
             display-name = "Nav";
-// Arrows sit where the Planck/Workman vim keys (y n e o) were. Boot* = hold 1 s.
+// Arrows sit where the Planck/Workman vim keys (y n e o) were.
 // ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
-// │Undo │ Cut │Copy │Paste│Redo │   │ ⇧←  │ ⇧↓  │ ⇧↑  │ ⇧→  │Boot*│  select
+// │Undo │ Cut │Copy │Paste│Redo │   │ ⇧←  │ ⇧↓  │ ⇧↑  │ ⇧→  │     │  select
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 // │ Esc │ Tab │ ⇧Tab│ Del │ ⌃F  │   │  ←  │  ↓  │  ↑  │  →  │Mouse│  move
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
@@ -331,7 +321,7 @@
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
 //                   │→BASE│ Spc │   │ Ent │ →NUM│
             bindings = <
-&kp LC(Z) &kp LC(X) &kp LC(C)       &kp LC(V)   &kp LC(LS(Z))    &kp LS(LEFT) &kp LS(DOWN) &kp LS(UP) &kp LS(RIGHT) &boot_hold 0 0
+&kp LC(Z) &kp LC(X) &kp LC(C)       &kp LC(V)   &kp LC(LS(Z))    &kp LS(LEFT) &kp LS(DOWN) &kp LS(UP) &kp LS(RIGHT) &none
 &kp ESC   &kp TAB   &kp LS(TAB)     &kp DEL     &kp LC(F)        &kp LEFT     &kp DOWN     &kp UP     &kp RIGHT     &to MOUSE
 &none     &kp PSCRN &kp LC(LS(TAB)) &kp LC(TAB) &kp LC(A)        &kp HOME     &kp PG_DN    &kp PG_UP  &kp END       &none
                      &to BASE &kp SPACE    &kp RET &to NUM
@@ -346,20 +336,20 @@
             display-name = "Num";
 // Right: numpad, 0 on the thumb. Outer columns hold what is typed next to
 // numbers (measured: space . - , : /). , and . stay where they are on base.
-// Left: F-keys in the same numpad shape, plus bootloader (Boot* = hold 1 s).
+// Left: F-keys in the same numpad shape.
 // € is AltGr+5 (host layout us(altgr-intl)).
 // ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
 // │     │ F7  │ F8  │ F9  │ F10 │   │  +  │  7  │  8  │  9  │  ,  │
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 // │  €  │ F4  │ F5  │ F6  │ F11 │   │  -  │  4  │  5  │  6  │  :  │
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
-// │Boot*│ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
+// │     │ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
 //                   │→BASE│Spc→B│   │  0  │ →SYM│
             bindings = <
 &none          &kp F7 &kp F8 &kp F9 &kp F10    &kp PLUS  &kp N7 &kp N8 &kp N9 &kp COMMA
 &kp RA(N5)     &kp F4 &kp F5 &kp F6 &kp F11   &kp MINUS &kp N4 &kp N5 &kp N6 &kp COLON
-&boot_hold 0 0 &kp F1 &kp F2 &kp F3 &kp F12    &kp FSLH  &kp N1 &kp N2 &kp N3 &kp DOT
+&none          &kp F1 &kp F2 &kp F3 &kp F12    &kp FSLH  &kp N1 &kp N2 &kp N3 &kp DOT
                      &to BASE &spc_home    &kp N0 &to SYM
 
 &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans

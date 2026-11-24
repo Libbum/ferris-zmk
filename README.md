@@ -35,8 +35,7 @@ Key positions: `0–9` top row, `10–19` home, `20–29` bottom, thumbs `30 31 
 
 ## Layers
 
-All layer switching is by **tap** (`&to`): a layer stays until you leave it. No holds, except
-the bootloader keys.
+All layer switching is by **tap** (`&to`): a layer stays until you leave it. No holds.
 
 ![Keymap](keymap-drawer/keymap.svg)
 
@@ -69,7 +68,7 @@ SYM  (Pascal Getreuer's symbol layer, ? and _ in place of , and .)
 
 NAV
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
-│Undo │ Cut │Copy │Paste│Redo │   │ ⇧←  │ ⇧↓  │ ⇧↑  │ ⇧→  │Boot*│  select
+│Undo │ Cut │Copy │Paste│Redo │   │ ⇧←  │ ⇧↓  │ ⇧↑  │ ⇧→  │     │  select
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │ Esc │ Tab │ ⇧Tab│ Del │ ⌃F  │   │  ←  │  ↓  │  ↑  │  →  │Mouse│  move
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
@@ -83,7 +82,7 @@ NUM
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │  €  │ F4  │ F5  │ F6  │ F11 │   │  -  │  4  │  5  │  6  │  :  │
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
-│Boot*│ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
+│     │ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
                   │→BASE│Spc→B│   │  0  │ →SYM│
 
@@ -97,7 +96,6 @@ MOUSE  (NAV's twin — reached from NAV's Mouse key)
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
                   │→BASE│ Spc │   │ Ent │ →NUM│
 
-Boot* = hold 1 s (a tap does nothing). Resets the half it is pressed on.
 ```
 
 </details>
@@ -174,8 +172,9 @@ Each choice was argued on its own merits for this board — not carried over fro
 - **F-keys** share NUM in the same numpad shape — rarely used, so they take the spare half.
 - **Esc combo is off on NUM**: there the inner thumbs are Space and `0`, and `0 ` is a
   common roll.
-- **Bootloader on both halves, 1 s hold.** `&bootloader` resets the half the key is on, so
-  each half needs its own; the hold stops a "thought I was on BASE" `.` from rebooting.
+- **No bootloader or Studio keys.** Every flash needs the USB cable anyway, and the reset
+  button (double-tap) is reachable; Studio can't edit combos or timings and would drift from
+  git. Keymap-only changes need just the dongle reflashed.
 - **Layer chords from BASE** (same-hand thumb pairs) make every layer one action away;
   neither pair (Shift+Space, Enter+→SYM) occurs in normal typing.
 - **Tab combo has no prior-idle**: it's usually pressed right after typing (shell completion).
@@ -205,14 +204,14 @@ Each choice was argued on its own merits for this board — not carried over fro
 - [ ] Tune knob scroll step, pointer step and direction.
 - [ ] Tune combo timing (40 ms window, 150 ms prior-idle) — especially J+P for `)`.
 - [ ] Check sticky-key timeout (1 s) feels right.
-- [ ] Verify: Ctrl+click with sticky Ctrl, held Boot resets the correct half.
+- [ ] Verify: Ctrl+click with sticky Ctrl.
 
 ### Later
 - [ ] Remap Neovim, Zed (`keymap.json`) and zsh vi-mode for Gallium.
 - [ ] Knobs for tiling window manager navigation (focus / workspace).
 - [ ] Fcitx 5 pinyin ideas.
 - [ ] Decide whether the MOUSE layer earns its place.
-- [ ] Spare keys: NAV bottom-left and bottom-right pinky corners, NUM top-left, most of MOUSE.
+- [ ] Spare keys: NAV top-right and bottom pinky corners, NUM top-left and bottom-left, most of MOUSE.
 
 ## Drawing the layout
 

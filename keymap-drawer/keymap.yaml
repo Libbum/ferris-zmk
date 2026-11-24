@@ -80,7 +80,7 @@ layers:
   - ⇧ ↓
   - ⇧ ↑
   - ⇧ →
-  - {t: Boot, h: hold 1 s}
+  - ''
   - Esc
   - Tab
   - ⇧ Tab
@@ -126,7 +126,7 @@ layers:
   - '5'
   - '6'
   - ':'
-  - {t: Boot, h: hold 1 s}
+  - ''
   - F1
   - F2
   - F3
