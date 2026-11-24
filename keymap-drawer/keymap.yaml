@@ -34,7 +34,7 @@ layers:
   - {t: ⇧ 1×, h: 2× caps}
   - Spc
   - Ent
-  - → Sym
+  - ⌫
   Sym:
   - '`'
   - <
@@ -69,7 +69,7 @@ layers:
   - → Base
   - {t: Space, h: → Base}
   - {t: Enter, h: → Base}
-  - → Nav
+  - ⌫
   Nav:
   - Undo
   - Cut
@@ -104,7 +104,7 @@ layers:
   - → Base
   - Spc
   - Ent
-  - → Num
+  - ⌫
   Num:
   - ''
   - F7
@@ -139,7 +139,7 @@ layers:
   - → Base
   - {t: Space, h: → Base}
   - '0'
-  - → Sym
+  - ⌫
   Mouse:
   - ''
   - Back
@@ -174,7 +174,7 @@ layers:
   - → Base
   - Spc
   - Ent
-  - → Num
+  - ⌫
 combos:
 - p: [31, 32]
   k: Esc
@@ -187,11 +187,11 @@ combos:
   k: → Num
   a: bottom
   o: 0.6
+- p: [30, 33]
+  k: → Sym
 - p: [0, 10]
   k: Tab
   l: [Gallium]
-- p: [9, 19]
-  k: ⌫
 - p: [11, 21]
   k: GUI
 - p: [12, 22]

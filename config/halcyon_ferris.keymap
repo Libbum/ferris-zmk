@@ -124,8 +124,9 @@
             layers = <BASE SYM NAV MOUSE>;
         };
 
-        // Layer chords: same-hand thumb pairs, all layers.
-        // Left pair (Shift + Space) = NAV, right pair (Enter + →SYM) = NUM.
+        // Layer chords, all layers. Same-hand thumb pairs: left (Shift + Space) = NAV,
+        // right (Enter + Backspace) = NUM — one thumb on two keys, so no rolls.
+        // Both outer thumbs (Shift + Backspace) = SYM.
         combo_to_nav {
             key-positions = <30 31>;
             bindings = <&to NAV>;
@@ -134,6 +135,11 @@
         combo_to_num {
             key-positions = <32 33>;
             bindings = <&to NUM>;
+            timeout-ms = <40>;
+        };
+        combo_to_sym {
+            key-positions = <30 33>;
+            bindings = <&to SYM>;
             timeout-ms = <40>;
         };
 
@@ -145,15 +151,6 @@
             bindings = <&kp TAB>;
             timeout-ms = <40>;
             layers = <BASE>;
-        };
-
-        // Backspace: right pinky upper pair (, + I), mirror of Tab. All layers.
-        // One finger, so the ring/pinky stagger doesn't matter and it can't misfire in
-        // a roll. No prior-idle: Backspace usually follows typing straight away.
-        combo_bspc {
-            key-positions = <9 19>;
-            bindings = <&kp BSPC>;
-            timeout-ms = <40>;
         };
 
         // Sticky mods: home-row key + the key directly below (same finger).
@@ -265,20 +262,21 @@
             display-name = "Gallium";
 // ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
 // │  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U  │  ,  │
-// │ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │  ⌫  │
+// │ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │     │
 // │  N  │  R  │  T  │  S  │  G  │   │  P  │  H  │  A  │  E  │  I  │
 // │     │ gui │ alt │ ctl │     │   │     │ ctl │ alt │ gui │     │
 // │  X  │  Q  │  M  │  W  │  Z  │   │  K  │  F  │  '  │  ;  │  .  │
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-//                   │ ⇧1× │ Spc │   │ Ent │ →SYM│
+//                   │ ⇧1× │ Spc │   │ Ent │  ⌫  │
 //                   └─────┴─────┘   └─────┴─────┘
 //                      └─NAV─┘         └─NUM─┘    thumb pairs → layer (all layers)
 //                           └── Esc ──┘          Spc+Ent (not on NUM)
+//                   └──────── SYM ────────┘      both outer thumbs (all layers)
             bindings = <
 &kp B  &kp L  &kp D  &kp C  &kp V      &kp J  &kp Y  &kp O    &kp U    &kp COMMA
 &kp N  &kp R  &kp T  &kp S  &kp G      &kp P  &kp H  &kp A    &kp E    &kp I
 &kp X  &kp Q  &kp M  &kp W  &kp Z      &kp K  &kp F  &kp SQT  &kp SEMI &kp DOT
-                     &shift_td &kp SPACE   &kp RET &to SYM
+                     &shift_td &kp SPACE   &kp RET &kp BSPC
 
 // Module row: 34 = left knob press (→BASE), 43 = right knob press (middle click).
 // Other layers are &trans here, so the presses work the same everywhere.
@@ -299,12 +297,12 @@
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 // │  ~  │  +  │  [  │  ]  │  %  │   │  @  │  :  │  ?  │  _  │  '  │
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-//                   │→BASE│Spc→B│   │Ent→B│ →NAV│
+//                   │→BASE│Spc→B│   │Ent→B│  ⌫  │
             bindings = <
 &kp GRAVE &kp LT   &kp GT   &kp MINUS &kp PIPE     &kp CARET &kp LBRC  &kp RBRC  &kp DLLR  &kp BSLH
 &kp EXCL  &kp STAR &kp FSLH &kp EQUAL &kp AMPS     &kp HASH  &kp LPAR  &kp RPAR  &kp SEMI  &kp DQT
 &kp TILDE &kp PLUS &kp LBKT &kp RBKT  &kp PRCNT    &kp AT    &kp COLON &kp QMARK &kp UNDER &kp SQT
-                     &to BASE &spc_home    &ent_home &to NAV
+                     &to BASE &spc_home    &ent_home &kp BSPC
 
 &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans
             >;
@@ -320,12 +318,12 @@
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 // │     │PrtSc│PrvTb│NxtTb│ ⌃A  │   │Home │PgDn │PgUp │ End │     │  jump
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-//                   │→BASE│ Spc │   │ Ent │ →NUM│
+//                   │→BASE│ Spc │   │ Ent │  ⌫  │
             bindings = <
 &kp LC(Z) &kp LC(X) &kp LC(C)       &kp LC(V)   &kp LC(LS(Z))    &kp LS(LEFT) &kp LS(DOWN) &kp LS(UP) &kp LS(RIGHT) &none
 &kp ESC   &kp TAB   &kp LS(TAB)     &kp DEL     &kp LC(F)        &kp LEFT     &kp DOWN     &kp UP     &kp RIGHT     &to MOUSE
 &none     &kp PSCRN &kp LC(LS(TAB)) &kp LC(TAB) &kp LC(A)        &kp HOME     &kp PG_DN    &kp PG_UP  &kp END       &none
-                     &to BASE &kp SPACE    &kp RET &to NUM
+                     &to BASE &kp SPACE    &kp RET &kp BSPC
 
 &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans
             >;
@@ -346,12 +344,12 @@
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 // │     │ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-//                   │→BASE│Spc→B│   │  0  │ →SYM│
+//                   │→BASE│Spc→B│   │  0  │  ⌫  │
             bindings = <
 &none          &kp F7 &kp F8 &kp F9 &kp F10    &kp PLUS  &kp N7 &kp N8 &kp N9 &kp COMMA
 &kp RA(N5)     &kp F4 &kp F5 &kp F6 &kp F11   &kp MINUS &kp N4 &kp N5 &kp N6 &kp COLON
 &none          &kp F1 &kp F2 &kp F3 &kp F12    &kp FSLH  &kp N1 &kp N2 &kp N3 &kp DOT
-                     &to BASE &spc_home    &kp N0 &to SYM
+                     &to BASE &spc_home    &kp N0 &kp BSPC
 
 &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans
             >;
@@ -368,12 +366,12 @@
 // ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 // │     │     │     │     │     │   │     │     │     │     │     │
 // └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-//                   │→BASE│ Spc │   │ Ent │ →NUM│
+//                   │→BASE│ Spc │   │ Ent │  ⌫  │
             bindings = <
 &none &mkp MB4  &mkp MB5  &none     &none      &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT &none
 &none &mkp RCLK &mkp MCLK &mkp LCLK &none      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &to NAV
 &none &none     &none     &none     &none      &none          &none          &none        &none           &none
-                     &to BASE &kp SPACE    &kp RET &to NUM
+                     &to BASE &kp SPACE    &kp RET &kp BSPC
 
 &trans &trans &trans &trans &trans     &trans &trans &trans &trans &trans
             >;

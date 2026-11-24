@@ -46,15 +46,16 @@ All layer switching is by **tap** (`&to`): a layer stays until you leave it. No 
 BASE  (Gallium, column-staggered)
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
 │  B  │  L  │  D  │  C  │  V  │   │  J  │  Y  │  O  │  U  │  ,  │
-│ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │  ⌫  │  upper pairs: characters
+│ Tab │  _  │  /  │  -  │  (  │   │  )  │  ä  │  å  │  ö  │     │  upper pairs: characters
 │  N  │  R  │  T  │  S  │  G  │   │  P  │  H  │  A  │  E  │  I  │
 │     │ gui │ alt │ ctl │     │   │     │ ctl │ alt │ gui │     │  lower pairs: sticky mods
 │  X  │  Q  │  M  │  W  │  Z  │   │  K  │  F  │  '  │  ;  │  .  │
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-                  │ ⇧1× │ Spc │   │ Ent │ →SYM│   ⇧1× = sticky shift, double-tap = caps word
+                  │ ⇧1× │ Spc │   │ Ent │  ⌫  │   ⇧1× = sticky shift, double-tap = caps word
                   └──┬──┴──┬──┘   └──┬──┴──┬──┘
                      └─NAV─┘         └─NUM─┘      thumb pairs → layer (all layers)
                            └── Esc ──┘            Spc+Ent (not on NUM)
+                  └──────── SYM ────────┘        both outer thumbs (all layers)
 
 SYM  (Pascal Getreuer's symbol layer, ? and _ in place of , and .)
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
@@ -64,7 +65,7 @@ SYM  (Pascal Getreuer's symbol layer, ? and _ in place of , and .)
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │  ~  │  +  │  [  │  ]  │  %  │   │  @  │  :  │  ?  │  _  │  '  │
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-                  │→BASE│Spc→B│   │Ent→B│ →NAV│   Spc→B / Ent→B = key, then back to BASE
+                  │→BASE│Spc→B│   │Ent→B│  ⌫  │   Spc→B / Ent→B = key, then back to BASE
 
 NAV
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
@@ -74,7 +75,7 @@ NAV
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │     │PrtSc│PrvTb│NxtTb│ ⌃A  │   │Home │PgDn │PgUp │ End │     │  jump
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-                  │→BASE│ Spc │   │ Ent │ →NUM│
+                  │→BASE│ Spc │   │ Ent │  ⌫  │
 
 NUM
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
@@ -84,7 +85,7 @@ NUM
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │     │ F1  │ F2  │ F3  │ F12 │   │  /  │  1  │  2  │  3  │  .  │
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-                  │→BASE│Spc→B│   │  0  │ →SYM│
+                  │→BASE│Spc→B│   │  0  │  ⌫  │
 
 MOUSE  (NAV's twin — reached from NAV's Mouse key)
 ┌─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┐
@@ -94,7 +95,7 @@ MOUSE  (NAV's twin — reached from NAV's Mouse key)
 ├─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┤
 │     │     │     │     │     │   │     │     │     │     │     │
 └─────┴─────┴─────┼─────┼─────┤   ├─────┼─────┼─────┴─────┴─────┘
-                  │→BASE│ Spc │   │ Ent │ →NUM│
+                  │→BASE│ Spc │   │ Ent │  ⌫  │
 
 ```
 
@@ -102,15 +103,15 @@ MOUSE  (NAV's twin — reached from NAV's Mouse key)
 
 ### Getting around
 
-| From BASE | Action |
+| To | Action (from any layer) |
 | --- | --- |
-| SYM | tap right outer thumb |
+| SYM | both outer thumbs together |
 | NAV | left thumbs together |
 | NUM | right thumbs together |
 | MOUSE | NAV → Mouse key |
-| back to BASE | left outer thumb, or left knob press (any layer) |
+| back to BASE | left outer thumb, or left knob press |
 
-On SYM / NAV / NUM the right outer thumb cycles SYM → NAV → NUM → SYM.
+The right outer thumb is Backspace on every layer.
 
 ### Combos
 
@@ -122,8 +123,8 @@ key press, so fast typing can't trigger them.
 | Spc + Ent (31+32) | Esc | all but NUM | – |
 | L-thumbs (30+31) | → NAV | all | – |
 | R-thumbs (32+33) | → NUM | all | – |
+| outer thumbs (30+33) | → SYM | all | – |
 | B + N (0+10) | Tab | BASE | – |
-| , + I (9+19) | Backspace | all | – |
 | R+Q / T+M / S+W | sticky GUI / Alt / Ctrl (left) | all | – |
 | H+F / A+' / E+; | sticky Ctrl / Alt / GUI (right) | all | – |
 | L+R / D+T / C+S | `_` `/` `-` | BASE | ✓ |
@@ -175,8 +176,11 @@ Each choice was argued on its own merits for this board — not carried over fro
 - **No bootloader or Studio keys.** Every flash needs the USB cable anyway, and the reset
   button (double-tap) is reachable; Studio can't edit combos or timings and would drift from
   git. Keymap-only changes need just the dongle reflashed.
-- **Layer chords from BASE** (same-hand thumb pairs) make every layer one action away;
-  neither pair (Shift+Space, Enter+→SYM) occurs in normal typing.
+- **Layer chords from any layer** make every layer one action away, which freed the right
+  outer thumb for Backspace (next to Enter, where it's easiest to reach). The same-hand pairs
+  (Shift+Space, Enter+Backspace) are one thumb on two keys, so they can't roll. The outer
+  pair (Shift+Backspace) is two hands; a fast Backspace→capital could in theory land inside
+  40 ms — add prior-idle to it if that happens.
 - **Tab combo has no prior-idle**: it's usually pressed right after typing (shell completion).
 - **No volume** on the knobs — not wanted.
 
